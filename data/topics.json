@@ -1,0 +1,362 @@
+[
+{
+"id": "pensar",
+"n": 1,
+"en": "Thinking & learning",
+"es": "Pensamiento y aprendizaje",
+"block": "Mente y trabajo",
+"src": [
+"D2 Thinking · Learning",
+"M1 Cramming for success: study and academic work",
+"M2 Education: debates and issues"
+],
+"ready": true
+},
+{
+"id": "trabajo",
+"n": 2,
+"en": "Work & careers",
+"es": "Trabajo y carreras",
+"block": "Mente y trabajo",
+"src": [
+"D6 Work",
+"M3 Applying for a job",
+"M4 Job interviews",
+"M5 At work: colleagues and routines",
+"M6 At work: job satisfaction",
+"M7 At work: careers"
+],
+"ready": true
+},
+{
+"id": "tiempo",
+"n": 3,
+"en": "Time",
+"es": "El tiempo (cronológico)",
+"block": "Mente y trabajo",
+"src": [
+"D6 Time",
+"M60 Time: once in a blue moon"
+],
+"ready": true
+},
+{
+"id": "cambio",
+"n": 4,
+"en": "Change & technology",
+"es": "Cambio y tecnología",
+"block": "Ciencia y mundo",
+"src": [
+"D4 Change · Technology",
+"M55 Industries: from manufacturing to service",
+"M56 Technology and its impact",
+"M57 Technology of the future"
+],
+"ready": true
+},
+{
+"id": "naturaleza",
+"n": 5,
+"en": "Nature & the environment",
+"es": "Naturaleza y medio ambiente",
+"block": "Ciencia y mundo",
+"src": [
+"D12 Nature",
+"M28 Describing the world",
+"M29 Weather and climate",
+"M31 Taking root and reaping rewards",
+"M32 The animal kingdom",
+"M33 Our endangered world",
+"M58 Energy: from fossil fuels to windmills"
+],
+"ready": true
+},
+{
+"id": "azar",
+"n": 6,
+"en": "Chance, cause & difficulties",
+"es": "Azar, causas y dificultades",
+"block": "Ciencia y mundo",
+"src": [
+"D12 Chance",
+"M67 Cause and effect",
+"M69 Difficulties and dilemmas"
+],
+"ready": true
+},
+{
+"id": "materiales",
+"n": 7,
+"en": "Materials, space & the built environment",
+"es": "Materiales, espacio y entorno construido",
+"block": "Ciencia y mundo",
+"src": [
+"D16 Materials · The built environment",
+"M18 Home styles, lifestyles",
+"M30 Brick walls and glass ceilings",
+"M59 Space: no room to swing a cat"
+],
+"ready": true
+},
+{
+"id": "movimiento",
+"n": 8,
+"en": "Movement, transport & travel",
+"es": "Movimiento, transporte y viajes",
+"block": "Ciencia y mundo",
+"src": [
+"D8 Movement · Transport",
+"M25 On the road: traffic and driving",
+"M26 Travel and accommodation",
+"M27 Attracting tourists",
+"M61 Motion: taking steps",
+"M66 Speed: fast and slow"
+],
+"ready": true
+},
+{
+"id": "cantidad",
+"n": 9,
+"en": "Quantity, number & measurement",
+"es": "Cantidad, números y medidas",
+"block": "Dinero y sociedad",
+"src": [
+"D14 Quantity",
+"M64 Weight and density",
+"M71 Number: statistics and quantity"
+],
+"ready": true
+},
+{
+"id": "dinero",
+"n": 10,
+"en": "Money & the economy",
+"es": "Dinero y economía",
+"block": "Dinero y sociedad",
+"src": [
+"D14 Money",
+"M40 The haves and the have-nots",
+"M45 Economy and finance",
+"M46 Personal finance: making ends meet"
+],
+"ready": true
+},
+{
+"id": "poder",
+"n": 11,
+"en": "Power, politics & the law",
+"es": "Poder, política y ley",
+"block": "Dinero y sociedad",
+"src": [
+"D20 Power",
+"M35 Authorities: customs and police",
+"M41 British politics",
+"M42 International politics",
+"M43 The letter of the law",
+"M44 War and peace"
+],
+"ready": true
+},
+{
+"id": "sociedad",
+"n": 12,
+"en": "Social issues, beliefs & history",
+"es": "Cuestiones sociales, creencias e historia",
+"block": "Dinero y sociedad",
+"src": [
+"D20 Social issues",
+"M34 Here to help: customer service",
+"M36 Beliefs",
+"M37 Festivals in their cultural context",
+"M39 History: since the dawn of civilisation"
+],
+"ready": true
+},
+{
+"id": "comunicacion",
+"n": 13,
+"en": "Communication & the media",
+"es": "Comunicación y medios",
+"block": "Dinero y sociedad",
+"src": [
+"D10 Communication · The media",
+"M47 The media: in print",
+"M48 The media: internet and email",
+"M49 Advertising",
+"M50 The news: gathering and delivering",
+"M100 In the headlines"
+],
+"ready": true
+},
+{
+"id": "emociones",
+"n": 14,
+"en": "Emotions & reactions",
+"es": "Emociones y reacciones",
+"block": "Personas",
+"src": [
+"D18 Reactions (+ collocations, idioms, word formation)",
+"M13 Emotions and reactions",
+"M14 Negative feelings",
+"M62 Manner: behaviour and body language"
+],
+"ready": true
+},
+{
+"id": "salud",
+"n": 15,
+"en": "Health & medicine",
+"es": "Salud y medicina",
+"block": "Personas",
+"src": [
+"D18 Health (+ phrasal verbs)",
+"M51 Healthcare",
+"M52 Illness: feeling under the weather",
+"M53 Medical language",
+"M54 Diet, sport and fitness"
+],
+"ready": true
+},
+{
+"id": "personas",
+"n": 16,
+"en": "Describing people",
+"es": "Describir a las personas",
+"block": "Personas",
+"src": [
+"D24 People",
+"M8 Describing people: positive and negative qualities",
+"M9 Describing people: appearance",
+"M10 Describing people: personality and character traits"
+],
+"ready": true
+},
+{
+"id": "relaciones",
+"n": 17,
+"en": "Relationships & life stages",
+"es": "Relaciones y etapas de la vida",
+"block": "Personas",
+"src": [
+"D24 Relationships",
+"M11 Relationships: friends forever",
+"M12 Relationships: ups and downs",
+"M15 Birth and death: from cradle to grave",
+"M19 Socialising and networking"
+],
+"ready": true
+},
+{
+"id": "artes",
+"n": 18,
+"en": "Quality & the arts",
+"es": "Calidad y artes",
+"block": "Cultura y ocio",
+"src": [
+"D22 Quality · The arts",
+"M20 The performance arts: reviews and critiques",
+"M21 The visual arts",
+"M22 Talking about books",
+"M63 Sounds: listen up!",
+"M65 All the colours of the rainbow"
+],
+"ready": true
+},
+{
+"id": "ocio",
+"n": 19,
+"en": "Preferences, leisure & lifestyle",
+"es": "Preferencias, ocio y estilo de vida",
+"block": "Cultura y ocio",
+"src": [
+"D26 Preference · Leisure activities",
+"M16 Free time: relaxation and leisure",
+"M17 All the rage: clothes and fashion",
+"M23 Food: a recipe for disaster",
+"M24 Dinner’s on me: entertaining and eating out"
+],
+"ready": true
+},
+{
+"id": "funciones",
+"n": 20,
+"en": "Functional language",
+"es": "Lenguaje funcional (opinar, quejarse, disculparse…)",
+"block": "Cómo funciona el idioma",
+"src": [
+"M68 Spot the difference: making",
+"M70 Modality: expressing facts, opinions, desires",
+"M72 Permission: getting the go-ahead",
+"M73 Complaining and protesting",
+"M74 Apology, regret and reconciliation",
+"M75 A pat on the back: complimenting and praising",
+"M76 Promises and bets",
+"M77 Reminiscences and regrets",
+"M78 Agreement, disagreement and compromise"
+],
+"ready": true
+},
+{
+"id": "escritura",
+"n": 21,
+"en": "Academic writing, style & register",
+"es": "Escritura académica, estilo y registro",
+"block": "Cómo funciona el idioma",
+"src": [
+"M79 Academic writing: making sense",
+"M80 Academic writing: text structure",
+"M81 Writing: style and format",
+"M82 Whatchamacallit: being indirect",
+"M83 Give or take: more vague",
+"M84 The way you say it",
+"M97 Register: degrees of formality",
+"M101 Red tape"
+],
+"ready": true
+},
+{
+"id": "formacion",
+"n": 22,
+"en": "Word-building & meaning",
+"es": "Formación de palabras y significados",
+"block": "Cómo funciona el idioma",
+"src": [
+"M85 Abbreviations and acronyms",
+"M86 Prefixes: creating new meanings",
+"M87 Suffixes: forming new words",
+"M88 Word-building and word-blending",
+"M90 Easily confused words",
+"M91 One word, many meanings"
+],
+"ready": true
+},
+{
+"id": "expresiones",
+"n": 23,
+"en": "Collocations, metaphor, idioms & phrasal verbs",
+"es": "Collocations, metáforas, idioms y phrasal verbs",
+"block": "Cómo funciona el idioma",
+"src": [
+"M92 Collocation: which words go together",
+"M93 Metaphor: seeing the light",
+"M94 Idioms for everyday situations and feelings",
+"M95 Brushing up on phrasal verbs",
+"M96 Connotation: making associations"
+],
+"ready": true
+},
+{
+"id": "variedades",
+"n": 24,
+"en": "English around the world",
+"es": "El inglés en el mundo",
+"block": "Cómo funciona el idioma",
+"src": [
+"M38 Talking about language",
+"M89 English: a global language",
+"M98 Divided by a common language",
+"M99 Language and gender"
+],
+"ready": true
+}
+]

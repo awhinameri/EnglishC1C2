@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cuaderno de inglés C1–C2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a study notebook. Sticky top bar, topic rail on wide screens, one working column.
+   Signature: words you mark get a highlighter swipe, like the pen on a printed page. */
+:root{
+  --paper:#f6f7fa; --card:#ffffff; --ink:#1b2130; --muted:#5b6476; --rule:#dde1ea; --soft:#eceff5;
+  --accent:#2747c9; --accent-ink:#ffffff; --hl:#ffe45c; --hl-ink:#1b2130;
+  --ok:#17845a; --ok-soft:#dcf2e8; --bad:#bf3434; --bad-soft:#fbe3e3;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --ui:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11141b; --card:#181c25; --ink:#e6e9f1; --muted:#9aa2b3; --rule:#2a303d; --soft:#212634;
+  --accent:#93a8ff; --accent-ink:#0f1320; --hl:rgba(255,222,70,.38); --hl-ink:#fff6cc;
+  --ok:#4cc995; --ok-soft:rgba(76,201,149,.14); --bad:#ff7d7d; --bad-soft:rgba(255,125,125,.13); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11141b; --card:#181c25; --ink:#e6e9f1; --muted:#9aa2b3; --rule:#2a303d; --soft:#212634;
+  --accent:#93a8ff; --accent-ink:#0f1320; --hl:rgba(255,222,70,.38); --hl-ink:#fff6cc;
+  --ok:#4cc995; --ok-soft:rgba(76,201,149,.14); --bad:#ff7d7d; --bad-soft:rgba(255,125,125,.13); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 var(--ui);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--rule)}
+.top-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;background:none;border:0;padding:0;margin-right:auto}
+.brand b{font-family:var(--display);font-size:21px;font-weight:600}
+.brand span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+@media (max-width:600px){.brand span{display:none}}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav button{background:none;border:1px solid transparent;border-radius:999px;padding:6px 12px;font-weight:500;color:var(--muted)}
+.nav button[aria-current="true"]{color:var(--ink);border-color:var(--rule);background:var(--soft)}
+.badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--hl);color:var(--hl-ink);font-size:12px;font-weight:700;text-align:center;margin-left:4px}
+.sync{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.dot.ok{background:var(--ok)} .dot.warn{background:#d39b1a}
+
+/* shell */
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding-block:24px 64px}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr)}.rail{display:none}}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding-right:4px}
+.rail h4{font:600 11px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+.rail button{display:flex;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:6px 8px;color:var(--ink);align-items:baseline}
+.rail button:hover{background:var(--soft)}
+.rail button[aria-current="true"]{background:var(--soft);font-weight:600}
+.rail button .n{font-family:var(--mono);font-size:11px;color:var(--muted);width:18px;flex:none}
+.rail button.off{color:var(--muted)}
+main{min-width:0}
+
+/* home */
+.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;margin-bottom:28px}
+@media (max-width:700px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(28px,4vw,40px)}
+.hero p{max-width:60ch}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:18px}
+.stat-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+.stat b{display:block;font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums;line-height:1}
+.stat span{font-size:12px;color:var(--muted)}
+.block-h{font:600 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.tcard{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:14px;min-height:118px}
+.tcard:hover{border-color:var(--accent)}
+.tcard .n{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.tcard h3{font-size:18px}
+.tcard .src{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+.tcard.off{opacity:.62}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.pill.hl{background:var(--hl);color:var(--hl-ink)} .pill.ok{background:var(--ok-soft);color:var(--ok)}
+.bar{height:4px;border-radius:2px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+
+/* topic */
+.thead{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.thead h1{font-size:clamp(26px,3.6vw,36px)}
+.thead .es{font-family:var(--display);font-style:italic;color:var(--muted);font-size:18px}
+.srcs{display:flex;flex-wrap:wrap;gap:6px}
+.srcs span{font-family:var(--mono);font-size:11px;border:1px solid var(--rule);border-radius:6px;padding:2px 7px;color:var(--muted)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--rule);margin:14px 0 16px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;font-weight:600;color:var(--muted);white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.chip{border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip .c{font-family:var(--mono);font-size:11px;opacity:.7;margin-left:4px}
+.search{flex:1 1 200px;min-width:0;border:1px solid var(--rule);background:var(--card);border-radius:8px;padding:7px 10px}
+.addw{display:grid;gap:8px;margin-bottom:14px}
+.addw .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.addw input,.addw select{min-width:0;border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:8px 10px}
+.addw label{display:grid;gap:3px;font-size:12.5px;color:var(--muted)}
+.delw{background:none;border:0;padding:0;color:var(--muted);font-size:12.5px;margin:4px 0 0 14px}
+.toggle{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+
+/* word list */
+.list{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--rule);border-radius:var(--r)}
+.row{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;padding:12px 14px;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.say{display:inline-grid;place-items:center;width:26px;height:26px;margin:0 2px 0 6px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);vertical-align:-6px;cursor:pointer}
+.say svg{width:16px;height:16px}
+.say:hover,.say.on{color:var(--ink);background:var(--soft)}
+.ex .say{width:22px;height:22px;vertical-align:-5px}
+.ex .say svg{width:14px;height:14px}
+.mk{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);display:grid;place-items:center;padding:0}
+.mk svg{width:16px;height:16px}
+.mk.on{background:var(--hl);border-color:transparent;color:var(--hl-ink)}
+.mk.done{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.term{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25}
+.term.on{background:linear-gradient(transparent 52%,var(--hl) 52%,var(--hl) 92%,transparent 92%);color:var(--ink)}
+.meta{display:inline-flex;gap:6px;margin-left:8px;vertical-align:middle}
+.tag{font-family:var(--mono);font-size:10.5px;padding:1px 6px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.def{margin:2px 0}
+.ex{font-family:var(--display);font-style:italic;color:var(--muted);font-size:16px}
+.ex mark,.cloze mark{background:none;color:var(--ink);font-weight:600;font-style:normal;border-bottom:2px solid var(--accent)}
+.esp{font-size:13px;color:var(--accent)}
+.more{background:none;border:0;padding:0;color:var(--accent);font-size:12.5px;font-weight:600;margin-top:4px}
+.ai{margin-top:6px;font-size:14px;border-left:3px solid var(--accent);padding:4px 0 4px 10px;white-space:pre-wrap}
+.wfam{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;padding:10px 14px;border-top:1px solid var(--rule)}
+.wfam:first-child{border-top:0}
+.wfam b{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+
+/* practice */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.mode{text-align:left;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:4px}
+.mode:hover{border-color:var(--accent)}
+.mode b{font-family:var(--display);font-size:18px}
+.mode span{font-size:13px;color:var(--muted)}
+.mode .c{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+.scope{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 14px}
+.quiz{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:20px;max-width:760px}
+.qtop{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-bottom:12px;flex-wrap:wrap}
+.qtxt{font-family:var(--display);font-size:22px;line-height:1.35;margin:4px 0 10px}
+.qhint{font-size:14px;color:var(--muted);margin-bottom:12px}
+.qkey{font-family:var(--mono);font-weight:500;letter-spacing:.06em;background:var(--soft);padding:2px 8px;border-radius:6px}
+.ans{display:flex;gap:8px;flex-wrap:wrap}
+.ans input{flex:1 1 220px;min-width:0;border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:10px 12px;font-size:16px}
+.btn{border:1px solid var(--rule);background:var(--card);border-radius:8px;padding:9px 14px;font-weight:600}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.hl{background:var(--hl);border-color:transparent;color:var(--hl-ink)}
+.btn:disabled{opacity:.5;cursor:default}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:10px 12px}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)} .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:8px;font-size:14.5px}
+.fb.ok{background:var(--ok-soft)} .fb.bad{background:var(--bad-soft)}
+.fb b{display:block;margin-bottom:2px}
+.qnav{display:flex;gap:8px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
+.flash{min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:center;padding:12px}
+.flash .term{font-size:30px}
+.score{font-family:var(--display);font-size:44px;line-height:1}
+
+/* essay */
+.ess{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px}
+@media (max-width:1000px){.ess{grid-template-columns:minmax(0,1fr)}}
+.prompts{display:flex;flex-direction:column;gap:8px}
+.prompt{text-align:left;border:1px solid var(--rule);background:var(--card);border-radius:8px;padding:10px 12px}
+.prompt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.prompt small{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prompt b{display:block;font-family:var(--display);font-size:16.5px}
+textarea.essay{width:100%;min-height:300px;resize:vertical;border:1px solid var(--rule);background:var(--card);border-radius:var(--r);padding:16px 18px;font:17px/1.7 var(--display);
+  background-image:linear-gradient(var(--card),var(--card));}
+.etitle{width:100%;border:0;border-bottom:1px solid var(--rule);background:transparent;font:600 22px/1.3 var(--display);padding:6px 0;margin-bottom:10px}
+.targets{display:flex;flex-wrap:wrap;gap:6px}
+.tw{border:1px dashed var(--rule);background:var(--card);border-radius:6px;padding:3px 8px;font-size:13px}
+.tw.used{border-style:solid;border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.estat{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:8px 0}
+.feedback{margin-top:18px;display:flex;flex-direction:column;gap:14px}
+.feedback h3{font-size:19px}
+.lvl{display:inline-block;font-family:var(--mono);font-size:13px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--ink);color:var(--paper)}
+.corr{border-top:1px solid var(--rule);padding:10px 0;display:grid;gap:3px}
+.corr:first-of-type{border-top:0}
+.del{text-decoration:line-through;text-decoration-color:var(--bad);color:var(--muted)}
+.ins{color:var(--ok);font-weight:600}
+.rew{font:16.5px/1.7 var(--display);white-space:pre-wrap}
+.elist{display:flex;flex-direction:column;gap:8px}
+.eitem{text-align:left;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;display:grid;gap:2px}
+.eitem b{font-family:var(--display);font-size:16.5px}
+.eitem span{font-size:12px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);background:var(--soft);border-radius:8px;padding:10px 12px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--rule);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.mobile-topics{display:none}
+@media (max-width:900px){.mobile-topics{display:block;margin-bottom:12px}.mobile-topics select{width:100%;padding:8px;border:1px solid var(--rule);border-radius:8px;background:var(--card)}}
+</style>
+
+<header class="top wrap">
+  <div class="top-in">
+    <button class="brand" id="go-home" type="button"><b>Cuaderno C1–C2</b><span>Destination · Vocabulary in Use</span></button>
+    <nav class="nav" aria-label="Secciones">
+      <button type="button" data-nav="home">Temas</button>
+      <button type="button" data-nav="review">Repaso <span class="badge" id="due-badge" hidden>0</span></button>
+      <button type="button" data-nav="essays">Mis redacciones</button>
+    </nav>
+    <div class="sync" id="sync"><i class="dot"></i><span>Conectando…</span></div>
+  </div>
+</header>
+<div class="shell wrap">
+  <aside class="rail" id="rail" aria-label="Temas"></aside>
+  <main id="main"><div class="empty">Cargando…</div></main>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KIND = {vocab:"Topic vocabulary", pv:"Phrasal verbs", col:"Collocations & patterns", idiom:"Idioms", wf:"Word formation"};
+const KIND_ES = {vocab:"Vocabulario", pv:"Phrasal verbs", col:"Collocations y patterns", idiom:"Idioms", wf:"Word formation"};
+const ICON_SAY = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor" stroke-linejoin="round"/><path d="M10.6 5.6a3.2 3.2 0 010 4.8M12.4 3.9a5.6 5.6 0 010 8.2"/></svg>';
+const TTS = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let ttsVoice = null;
+function pickVoice(){
+  if (!TTS) return;
+  const vs = speechSynthesis.getVoices(); if (!vs.length) return;
+  const score = v => (v.lang === "en-GB" ? 4 : /^en[-_]GB/i.test(v.lang) ? 4 : /^en/i.test(v.lang) ? 2 : 0) + (/natural|neural|premium|enhanced|google/i.test(v.name) ? 1 : 0);
+  ttsVoice = vs.slice().sort((a, b) => score(b) - score(a))[0];
+  if (score(ttsVoice) < 2) ttsVoice = null;
+}
+if (TTS) { pickVoice(); speechSynthesis.addEventListener?.("voiceschanged", pickVoice); }
+const sayClean = t => String(t).replace(/\(NOT[^)]*\)/g, "").replace(/[\[\]]/g, "").replace(/\bsb's\b/g, "somebody's").replace(/\bsb\b/g, "somebody").replace(/\bsth\b/g, "something")
+  .replace(/\s·\s/g, ". ").replace(/\s*\/\s*/g, " or ").replace(/[()]/g, "").replace(/…/g, " ").replace(/\s+/g, " ").trim();
+function speak(text, btn){
+  if (!TTS) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(sayClean(text));
+  u.lang = ttsVoice?.lang || "en-GB"; if (ttsVoice) u.voice = ttsVoice; u.rate = 0.92;
+  if (btn) { btn.classList.add("on"); u.onend = u.onerror = () => btn.classList.remove("on"); }
+  speechSynthesis.speak(u);
+}
+const sayBtn = (text, label) => TTS ? `<button class="say" type="button" data-say="${esc(text)}" title="${label || "Escuchar pronunciación"}" aria-label="${label || "Escuchar pronunciación"}">${ICON_SAY}</button>` : "";
+const ICON_MARK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13l2.5-.6 7.3-7.3-1.9-1.9-7.3 7.3L3 13z"/><path d="M9.6 4.4l1.9 1.9"/></svg>';
+const ICON_DONE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8.5l3 3 7-7"/></svg>';
+const DAY = 864e5, INTERVALS = [0, 1, 3, 7, 14, 30];
+
+function hash(str){let h=5381;for(let i=0;i<str.length;i++)h=((h<<5)+h+str.charCodeAt(i))|0;return (h>>>0).toString(36);}
+const keyOf = (topic, it) => hash(topic + "|" + it.s + "|" + it.k + "|" + it.t);
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;:"]+$/g,"").replace(/\s+/g," ").trim();
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmtDate = ts => new Date(ts).toLocaleDateString("es-ES", {day:"numeric", month:"short", year:"numeric"});
+const exHtml = e => esc(e).replace(/\[([^\]]+)\]/g, "<mark>$1</mark>");
+const plain = e => String(e).replace(/[\[\]]/g, "");
+const lsGet = k => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+/* ---------- persistence: Claude db (per user, private) with browser fallback ---------- */
+const Store = {
+  mode: "local", uid: null, db: null,
+  marks: {},      // topic -> { key: {st, box, due, t, d, es, e, k, s} }
+  essays: {},     // id -> essay
+  words: {},      // topic -> [own items]
+  stats: {},      // topic -> {n, ok}
+  timers: {}, chains: {},
+  async init(){
+    const cache = lsGet("cuaderno.v1") || {};
+    this.marks = cache.marks || {}; this.essays = cache.essays || {}; this.stats = cache.stats || {}; this.words = cache.words || {};
+    try {
+      const [db, user] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]);
+      const uid = user ? await user.id() : null;
+      if (db && uid) {
+        this.db = db; this.uid = uid;
+        const snap = await db.collection("data/users/" + uid).get();
+        const remote = {marks:{}, essays:{}, stats:null, words:{}};
+        snap.docs.forEach(d => { const v = d.data(); if (!v) return;
+          if (v.type === "marks") remote.marks[v.topic] = v.m || {};
+          else if (v.type === "essay") remote.essays[v.id] = v;
+          else if (v.type === "stats") remote.stats = v.s || {};
+          else if (v.type === "words") remote.words[v.topic] = v.w || []; });
+        const hadRemote = snap.size > 0;
+        if (hadRemote) { this.marks = remote.marks; this.essays = remote.essays; this.stats = remote.stats || {}; this.words = remote.words; }
+        else if (Object.keys(this.marks).length || Object.keys(this.essays).length || Object.keys(this.words).length) {
+          // first time on the cloud store: upload what this browser already had
+          Object.keys(this.marks).forEach(t => this.save("marks_" + t));
+          Object.keys(this.essays).forEach(id => this.save("essay_" + id));
+          Object.keys(this.words).forEach(t => this.save("words_" + t));
+          this.save("stats");
+        }
+        this.mode = "cloud";
+      }
+    } catch (e) { console.warn("db unavailable", e); }
+    this.cache(); setSync();
+  },
+  cache(){ lsSet("cuaderno.v1", {marks:this.marks, essays:this.essays, stats:this.stats, words:this.words}); },
+  body(doc){
+    if (doc.startsWith("marks_")) { const t = doc.slice(6); return {type:"marks", topic:t, m:this.marks[t] || {}}; }
+    if (doc.startsWith("essay_")) return this.essays[doc.slice(6)];
+    if (doc.startsWith("words_")) { const t = doc.slice(6); return {type:"words", topic:t, w:this.words[t] || []}; }
+    return {type:"stats", s:this.stats};
+  },
+  save(doc, delay = 700){
+    this.cache();
+    if (this.mode !== "cloud") return;
+    clearTimeout(this.timers[doc]);
+    this.timers[doc] = setTimeout(() => {
+      const ref = this.db.doc("data/users/" + this.uid + "/" + doc);
+      const body = this.body(doc);
+      this.chains[doc] = (this.chains[doc] || Promise.resolve()).then(() => body ? ref.set(JSON.parse(JSON.stringify(body))) : ref.delete())
+        .then(() => setSync()).catch(e => { console.warn(e); setSync(e.code === "quota_exceeded" ? "El almacenamiento está lleno" : "No se pudo guardar; reintentando al próximo cambio"); });
+    }, delay);
+  },
+  mark(topic, key){ return (this.marks[topic] || {})[key]; },
+  setMark(topic, it, st){
+    const key = keyOf(topic, it); const m = this.marks[topic] = this.marks[topic] || {};
+    if (!st) delete m[key];
+    else m[key] = Object.assign(m[key] || {box:0, due:Date.now()}, {st, t:it.t, d:it.d, es:it.es||"", e:it.e||"", k:it.k, s:it.s});
+    this.save("marks_" + topic); updateBadge();
+  },
+  allMarks(){ const out = []; for (const [t, m] of Object.entries(this.marks)) for (const [k, v] of Object.entries(m)) out.push({topic:t, key:k, ...v}); return out; },
+  saveEssay(e){ e.updated = Date.now(); this.essays[e.id] = e; this.save("essay_" + e.id, 1200); },
+  deleteEssay(id){ delete this.essays[id]; this.save("essay_" + id, 0); },
+  addWord(topic, it){ const w = this.words[topic] = this.words[topic] || []; w.push(it); this.save("words_" + topic, 0); },
+  delWord(topic, key){ this.words[topic] = (this.words[topic] || []).filter(it => keyOf(topic, it) !== key); const m = this.marks[topic]; if (m && m[key]) { delete m[key]; this.save("marks_" + topic, 0); updateBadge(); } this.save("words_" + topic, 0); },
+  addStat(topic, ok){ const s = this.stats[topic] = this.stats[topic] || {n:0, ok:0}; s.n++; if (ok) s.ok++; this.save("stats", 2500); }
+};
+function setSync(err){
+  const el = $("#sync");
+  if (err) { el.innerHTML = '<i class="dot warn"></i><span>' + esc(err) + '</span>'; return; }
+  el.innerHTML = Store.mode === "cloud"
+    ? '<i class="dot ok"></i><span>Guardado en tu cuenta</span>'
+    : '<i class="dot warn"></i><span>Guardado solo en este navegador</span>';
+}
+
+/* ---------- Claude (sample) ---------- */
+let samplePromise = null;
+const getSample = () => samplePromise || (samplePromise = (window.claude?.use?.("sample") || Promise.resolve(null)).catch(() => null));
+
+/* ---------- data ---------- */
+let TOPICS = [], CACHE = {};
+async function loadTopic(id){
+  if (CACHE[id]) return withOwn(CACHE[id]);
+  const r = await fetch("data/" + id + ".json"); if (!r.ok) throw new Error("No se pudo cargar el tema");
+  const d = await r.json(); d.meta = TOPICS.find(t => t.id === id); d.base = d.items; CACHE[id] = d; return withOwn(d);
+}
+function withOwn(d){ d.items = d.base.concat(Store.words[d.id] || []); return d; }
+const srcName = s => s === "Mía" ? "Mis palabras" : s.startsWith("D") ? "Destination U" + s.slice(1) : "McCarthy U" + s.slice(1);
+const topicMeta = id => TOPICS.find(t => t.id === id);
+
+/* ---------- app state ---------- */
+const S = { view:"home", topic:null, tab:"vocab", kind:"all", src:"all", q:"", onlyMarked:false, showEs:lsGet("cuaderno.showEs") ?? true, quiz:null, essayId:null, promptIdx:0 };
+
+function updateBadge(){
+  const now = Date.now(), n = Store.allMarks().filter(m => m.st === 1 && (m.due || 0) <= now).length;
+  const b = $("#due-badge"); b.hidden = !n; b.textContent = n;
+}
+function navCurrent(){
+  document.querySelectorAll("[data-nav]").forEach(b => b.setAttribute("aria-current", String(b.dataset.nav === S.view || (S.view === "topic" && b.dataset.nav === "home"))));
+}
+function renderRail(){
+  const blocks = [...new Set(TOPICS.map(t => t.block))];
+  $("#rail").innerHTML = blocks.map(bl => '<h4>' + esc(bl) + '</h4>' + TOPICS.filter(t => t.block === bl).map(t =>
+    '<button type="button" data-topic="' + t.id + '" class="' + (t.ready ? "" : "off") + '" aria-current="' + (S.view === "topic" && S.topic === t.id) + '"><span class="n">' + t.n + '</span><span>' + esc(t.es) + '</span></button>').join("")).join("");
+}
+function render(){
+  navCurrent(); renderRail(); updateBadge();
+  if (S.view === "home") return renderHome();
+  if (S.view === "review") return renderReview();
+  if (S.view === "essays") return renderAllEssays();
+  if (S.view === "topic") return renderTopic();
+}
+function go(view, extra = {}){ Object.assign(S, {view}, extra); S.quiz = null; render(); window.scrollTo({top:0}); }
+
+/* ---------- home ---------- */
+function topicCounts(id){
+  const m = Store.marks[id] || {}; let on = 0, done = 0;
+  Object.values(m).forEach(v => v.st === 1 ? on++ : v.st === 2 && done++);
+  return {on, done, essays: Object.values(Store.essays).filter(e => e.topic === id).length};
+}
+function renderHome(){
+  const all = Store.allMarks(), now = Date.now();
+  const on = all.filter(m => m.st === 1).length, done = all.filter(m => m.st === 2).length, due = all.filter(m => m.st === 1 && m.due <= now).length;
+  const ess = Object.keys(Store.essays).length, ready = TOPICS.filter(t => t.ready).length;
+  const blocks = [...new Set(TOPICS.map(t => t.block))];
+  $("#main").innerHTML = `
+  <section class="hero">
+    <div>
+      <h1>Tu cuaderno de vocabulario C1–C2</h1>
+      <p class="muted">Los dos libros, ordenados por temas. Cuando una unidad de <i>Destination C1&amp;C2</i> y otra de <i>English Vocabulary in Use Advanced</i> tratan lo mismo, están juntas en un solo tema, con todo su vocabulario. Marca con el subrayador lo que no sabes, practícalo y escribe una redacción por tema.</p>
+      ${ready < TOPICS.length ? `<p class="muted" style="font-size:13px">Temas listos: ${ready} de ${TOPICS.length}.</p>` : ""}
+    </div>
+    <div class="panel">
+      <div class="block-h" style="margin-top:0">Tu progreso</div>
+      <div class="stat-row">
+        <div class="stat"><b>${on}</b><span>marcadas para aprender</span></div>
+        <div class="stat"><b>${done}</b><span>dominadas</span></div>
+        <div class="stat"><b>${ess}</b><span>redacciones</span></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ${due ? "hl" : ""}" type="button" data-nav="review">${due ? "Repasar " + due + " pendientes" : "Nada pendiente hoy"}</button>
+      </div>
+      <div class="block-h" style="margin-top:18px">Copia de seguridad</div>
+      <p class="note" style="margin:0 0 8px">Descarga tus marcas y redacciones en un archivo para pasarlas a otro navegador o dispositivo.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" type="button" data-act="export">Descargar copia</button>
+        <button class="btn" type="button" data-act="import">Cargar copia</button>
+        <input type="file" id="impf" accept="application/json,.json" hidden>
+      </div>
+      <p class="note" id="bkmsg" style="margin:6px 0 0"></p>
+    </div>
+  </section>
+  ${blocks.map(bl => `<div class="block-h">${esc(bl)}</div><div class="grid">${TOPICS.filter(t => t.block === bl).map(t => {
+    const c = topicCounts(t.id);
+    return `<button type="button" class="tcard ${t.ready ? "" : "off"}" data-topic="${t.id}">
+      <span class="n">Tema ${t.n}${t.ready ? "" : " · próximamente"}</span>
+      <h3>${esc(t.es)}</h3><span class="muted" style="font-size:13px">${esc(t.en)}</span>
+      <span style="display:flex;gap:6px;flex-wrap:wrap">${c.on ? `<span class="pill hl">${c.on} marcadas</span>` : ""}${c.done ? `<span class="pill ok">${c.done} dominadas</span>` : ""}${c.essays ? `<span class="pill">${c.essays} redacc.</span>` : ""}</span>
+      <span class="src">${t.src.map(s => esc(s.split(" ")[0])).join(" · ")}</span></button>`; }).join("")}</div>`).join("")}`;
+}
+
+/* ---------- topic ---------- */
+async function renderTopic(){
+  const meta = topicMeta(S.topic);
+  const head = `<div class="mobile-topics"><label class="muted" for="msel" style="font-size:12px">Tema</label>
+    <select id="msel">${TOPICS.map(t => `<option value="${t.id}" ${t.id === S.topic ? "selected" : ""}>${t.n}. ${esc(t.es)}${t.ready ? "" : " (próximamente)"}</option>`).join("")}</select></div>
+    <div class="thead"><span class="mono muted" style="font-size:12px">Tema ${meta.n} · ${esc(meta.block)}</span>
+    <h1>${esc(meta.en)}</h1><span class="es">${esc(meta.es)}</span>
+    <div class="srcs">${meta.src.map(s => `<span>${esc(s)}</span>`).join("")}</div></div>`;
+  if (!meta.ready) {
+    $("#main").innerHTML = head + `<div class="panel"><p>Este tema todavía no está cargado. Reunirá estas unidades de los dos libros, sin dejar fuera vocabulario. Lo iré añadiendo en las próximas versiones del cuaderno; tus marcas y redacciones se conservan.</p></div>`;
+    return;
+  }
+  $("#main").innerHTML = head + '<div class="empty"><span class="spin"></span> Cargando tema…</div>';
+  let d; try { d = await loadTopic(S.topic); } catch (e) { $("#main").innerHTML = head + `<div class="panel">${esc(e.message)}</div>`; return; }
+  if (S.view !== "topic" || S.topic !== d.id) return;
+  const tabs = [["vocab","Vocabulario"],["practice","Practicar"],["essay","Redacción"]];
+  $("#main").innerHTML = head + `<div class="tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" type="button" data-tab="${k}" aria-selected="${S.tab === k}">${l}</button>`).join("")}</div><div id="tabbody"></div>`;
+  if (S.tab === "vocab") renderVocab(d);
+  else if (S.tab === "practice") S.quiz ? renderQuiz() : renderPractice(d);
+  else renderEssay(d);
+}
+
+function filtered(d){
+  const q = norm(S.q);
+  return d.items.filter(it => (S.kind === "all" || it.k === S.kind) && (S.src === "all" || it.s === S.src)
+    && (!S.onlyMarked || (Store.mark(d.id, keyOf(d.id, it)) || {}).st === 1)
+    && (!q || norm(it.t + " " + it.d + " " + (it.es || "") + " " + plain(it.e || "")).includes(q)));
+}
+function renderVocab(d){
+  const kinds = ["vocab","pv","col","idiom"].filter(k => d.items.some(i => i.k === k));
+  const srcs = [...new Set(d.items.map(i => i.s))];
+  const cnt = k => d.items.filter(i => i.k === k).length;
+  const markedN = Object.values(Store.marks[d.id] || {}).filter(v => v.st === 1).length;
+  const body = $("#tabbody");
+  body.innerHTML = `
+  <div class="toolbar">
+    <button class="chip" type="button" data-kind="all" aria-pressed="${S.kind === "all"}">Todo<span class="c">${d.items.length}</span></button>
+    ${kinds.map(k => `<button class="chip" type="button" data-kind="${k}" aria-pressed="${S.kind === k}">${KIND_ES[k]}<span class="c">${cnt(k)}</span></button>`).join("")}
+    ${d.wf?.length ? `<button class="chip" type="button" data-kind="wf" aria-pressed="${S.kind === "wf"}">Word formation<span class="c">${d.wf.length}</span></button>` : ""}
+  </div>
+  <div class="toolbar">
+    <input class="search" id="q" type="search" placeholder="Buscar palabra, definición o traducción" value="${esc(S.q)}">
+    <select class="chip" id="srcsel" aria-label="Libro y unidad"><option value="all">Todas las unidades</option>${srcs.map(s => `<option value="${s}" ${S.src === s ? "selected" : ""}>${srcName(s)}</option>`).join("")}</select>
+    <label class="toggle"><input type="checkbox" id="onlym" ${S.onlyMarked ? "checked" : ""}> Solo marcadas (${markedN})</label>
+    <label class="toggle"><input type="checkbox" id="showes" ${S.showEs ? "checked" : ""}> Español</label>
+    <button class="chip" type="button" data-act="addw" aria-pressed="${!!S.addOpen}">+ Añadir palabra</button>
+  </div>
+  ${S.addOpen ? `<form class="panel addw" id="addwf">
+    <b>Añadir una palabra a este tema</b>
+    <div class="g">
+      <label>Palabra o expresión<input id="nw_t" required maxlength="120" placeholder="p. ej. take sth for granted"></label>
+      <label>Tipo<select id="nw_k">${["vocab","pv","col","idiom"].map(k => `<option value="${k}">${KIND_ES[k]}</option>`).join("")}</select></label>
+      <label>Traducción<input id="nw_es" maxlength="160" placeholder="dar algo por sentado"></label>
+    </div>
+    <label>Definición (en inglés)<input id="nw_d" maxlength="240" placeholder="fail to appreciate something because it is always there"></label>
+    <label>Ejemplo, con la parte clave entre corchetes para practicarla en "Completar la frase"<input id="nw_e" maxlength="300" placeholder="We [take] clean water [for granted]."></label>
+    <div class="toolbar" style="margin:0"><button class="btn pri" type="submit">Guardar palabra</button><button class="btn" type="button" data-act="addw">Cerrar</button><span class="muted" id="nwmsg" style="font-size:13px"></span></div>
+  </form>` : ""}
+  <div class="list" id="wl"></div>`;
+  drawList(d);
+}
+function drawList(d){
+  const wl = $("#wl");
+  if (S.kind === "wf") {
+    wl.innerHTML = d.wf.filter(w => S.src === "all" || w.s === S.src).filter(w => !S.q || norm(w.b + " " + w.f).includes(norm(S.q)))
+      .map(w => `<div class="wfam"><b>${esc(w.b)}</b><div>${esc(w.f)} <span class="tag">${w.s}</span></div></div>`).join("") || '<div class="empty">Nada que coincida.</div>';
+    return;
+  }
+  const items = filtered(d);
+  wl.innerHTML = items.map(it => {
+    const key = keyOf(d.id, it), m = Store.mark(d.id, key), st = m?.st || 0;
+    return `<div class="row" data-key="${key}">
+      <button class="mk ${st === 1 ? "on" : st === 2 ? "done" : ""}" type="button" data-mark="${key}" title="${st === 1 ? "Marcada para aprender. Pulsa para quitar" : st === 2 ? "Dominada. Pulsa para volver a marcarla" : "Marcar como palabra que no sé"}" aria-label="Marcar">${st === 2 ? ICON_DONE : ICON_MARK}</button>
+      <div>
+        <div><span class="term ${st === 1 ? "on" : ""}">${esc(it.t)}</span>${sayBtn(it.t)}<span class="meta"><span class="tag">${KIND_ES[it.k]}</span><span class="tag">${it.s}</span></span></div>
+        <div class="def">${esc(it.d)}</div>
+        ${it.e ? `<div class="ex">${exHtml(it.e)}${sayBtn(it.e, "Escuchar el ejemplo")}</div>` : ""}
+        ${S.showEs && it.es ? `<div class="esp">${esc(it.es)}</div>` : ""}
+        <button class="more" type="button" data-more="${key}">Más ejemplos con Claude</button>${it.own ? `<button class="delw" type="button" data-delw="${key}">Borrar mi palabra</button>` : ""}
+        <div class="ai" data-ai="${key}" hidden></div>
+      </div></div>`;
+  }).join("") || `<div class="empty">${S.onlyMarked ? "Aún no has marcado palabras en este apartado. Pulsa el subrayador junto a una palabra que no conozcas." : "Nada que coincida."}</div>`;
+}
+function itemByKey(d, key){ return d.items.find(it => keyOf(d.id, it) === key); }
+
+async function askMore(d, key, btn){
+  const it = itemByKey(d, key), box = $(`[data-ai="${key}"]`);
+  box.hidden = false;
+  const sample = await getSample();
+  if (!sample) { box.textContent = "Las respuestas de Claude solo funcionan al abrir el cuaderno dentro de Claude."; return; }
+  btn.disabled = true; box.innerHTML = '<span class="spin"></span>';
+  try {
+    await sample(`You are an English teacher for a Spanish-speaking learner aiming at C1–C2. For the item "${it.t}" (${KIND[it.k]}; meaning: ${it.d}), give:
+0) a first line "IPA:" with the British pronunciation in IPA (and the American one after " · US " only if it is clearly different), marking word stress;
+1) three new natural example sentences at C1–C2 level, each on its own line starting with "• ";
+2) one line "Ojo:" in Spanish with a nuance, register note, typical collocation or common mistake for Spanish speakers.
+No introduction, no headings.`, { modelTier:"quick", onText: ({text}) => { box.textContent = text; } });
+  } catch (e) { box.textContent = e.code === "rate_limited" ? "Demasiadas consultas seguidas. Prueba en un minuto." : e.code === "not_granted" ? "No se dio permiso para usar Claude en esta página." : "No se pudo consultar a Claude ahora."; }
+  btn.disabled = false;
+}
+
+/* ---------- practice ---------- */
+function pool(d, scope){
+  let items = d.items;
+  if (scope === "marked") items = items.filter(it => (Store.mark(d.id, keyOf(d.id, it)) || {}).st === 1);
+  else if (scope !== "all") items = items.filter(it => it.k === scope);
+  return items;
+}
+function renderPractice(d){
+  S.scope = S.scope || "all";
+  const p = pool(d, S.scope), cl = p.filter(i => /\[.+\]/.test(i.e || ""));
+  const ex = d.ex || [];
+  const n = t => ex.filter(e => e.type === t).length;
+  const marked = pool(d, "marked").length;
+  const kinds = ["vocab","pv","col","idiom"].filter(k => d.items.some(i => i.k === k));
+  const st = Store.stats[d.id];
+  $("#tabbody").innerHTML = `
+  <div class="scope"><span class="muted" style="font-size:13px">Practicar con:</span>
+    <button class="chip" type="button" data-scope="all" aria-pressed="${S.scope === "all"}">Todo el tema</button>
+    <button class="chip" type="button" data-scope="marked" aria-pressed="${S.scope === "marked"}">Mis marcadas<span class="c">${marked}</span></button>
+    ${kinds.map(k => `<button class="chip" type="button" data-scope="${k}" aria-pressed="${S.scope === k}">${KIND_ES[k]}</button>`).join("")}
+  </div>
+  <div class="modes">
+    <button class="mode" type="button" data-mode="flash" ${p.length ? "" : "disabled"}><b>Tarjetas</b><span>Ves la palabra, recuerdas el significado y te dices si la sabías.</span><span class="c">${p.length} tarjetas</span></button>
+    <button class="mode" type="button" data-mode="cloze" ${cl.length ? "" : "disabled"}><b>Completar la frase</b><span>Escribe la palabra que falta en el ejemplo, con la definición como pista.</span><span class="c">${cl.length} frases</span></button>
+    <button class="mode" type="button" data-mode="mcq" ${p.length > 3 ? "" : "disabled"}><b>Elegir la expresión</b><span>Lees la definición y eliges entre cuatro opciones.</span><span class="c">${p.length} preguntas</span></button>
+    <button class="mode" type="button" data-mode="wf" ${n("wf") ? "" : "disabled"}><b>Word formation</b><span>Cambia la palabra en mayúsculas para que encaje, como en el examen.</span><span class="c">${n("wf")} frases</span></button>
+    <button class="mode" type="button" data-mode="mc" ${n("mc") ? "" : "disabled"}><b>Palabras que se confunden</b><span>Elige la opción correcta entre parejas difíciles.</span><span class="c">${n("mc")} frases</span></button>
+    <button class="mode" type="button" data-mode="kwt" ${n("kwt") ? "" : "disabled"}><b>Transformaciones</b><span>Reescribe la frase con la palabra clave, de 3 a 8 palabras.</span><span class="c">${n("kwt")} frases</span></button>
+  </div>
+  <p class="note" style="margin-top:14px">Las palabras que falles se marcan solas con el subrayador para que vuelvan en el repaso.${st ? ` Llevas ${st.ok} aciertos de ${st.n} respuestas en este tema.` : ""}</p>`;
+}
+function startQuiz(d, mode){
+  const p = pool(d, S.scope || "all");
+  let qs = [];
+  if (mode === "flash") qs = shuffle(p).map(it => ({mode, it}));
+  else if (mode === "cloze") qs = shuffle(p.filter(i => /\[.+\]/.test(i.e || ""))).slice(0, 20).map(it => ({mode, it, a:[...it.e.matchAll(/\[([^\]]+)\]/g)].map(m => m[1]).join(" … ")}));
+  else if (mode === "mcq") qs = shuffle(p).slice(0, 20).map(it => {
+    const same = shuffle(d.items.filter(o => o !== it && o.k === it.k)), other = shuffle(d.items.filter(o => o !== it));
+    const opts = [it, ...[...same, ...other].filter((o, i, a) => a.indexOf(o) === i).slice(0, 3)];
+    return {mode, it, opts:shuffle(opts)};
+  });
+  else qs = shuffle((d.ex || []).filter(e => e.type === mode)).map(ex => ({mode, ex}));
+  S.quiz = {d, mode, qs, i:0, ok:0, done:false, answered:false, last:null};
+  renderQuiz();
+}
+const MODE_NAME = {flash:"Tarjetas", cloze:"Completar la frase", mcq:"Elegir la expresión", wf:"Word formation", mc:"Palabras que se confunden", kwt:"Transformaciones"};
+function renderQuiz(){
+  const z = S.quiz, body = $("#tabbody");
+  if (!z) return;
+  if (z.i >= z.qs.length) {
+    const pct = z.qs.length ? Math.round(100 * z.ok / z.qs.length) : 0;
+    body.innerHTML = `<div class="quiz"><div class="qtop"><span>${MODE_NAME[z.mode]}</span></div>
+      <div class="score">${z.ok} / ${z.qs.length}</div><p class="muted">${pct >= 85 ? "Muy bien. Estas ya las controlas." : pct >= 60 ? "Bien. Las falladas están marcadas para el repaso." : "Las falladas están marcadas. Repásalas en el vocabulario y vuelve a intentarlo."}</p>
+      <div class="qnav"><button class="btn" type="button" data-qact="exit">Volver a los modos</button><button class="btn pri" type="button" data-qact="again">Otra ronda</button></div></div>`;
+    return;
+  }
+  const q = z.qs[z.i];
+  const top = `<div class="qtop"><span>${MODE_NAME[z.mode]} · ${z.i + 1} de ${z.qs.length} · aciertos: ${z.ok}</span><button class="more" type="button" data-qact="exit" style="margin:0">Salir</button></div>`;
+  let mid = "";
+  if (q.mode === "flash") {
+    mid = `<div class="flash"><div class="term">${esc(q.it.t)}${sayBtn(q.it.t)}</div><span class="tag" style="align-self:center">${KIND_ES[q.it.k]} · ${q.it.s}</span>
+      ${z.answered ? `<div class="def">${esc(q.it.d)}</div>${q.it.e ? `<div class="ex">${exHtml(q.it.e)}</div>` : ""}${q.it.es ? `<div class="esp">${esc(q.it.es)}</div>` : ""}` : ""}</div>
+      <div class="qnav">${z.answered ? `<button class="btn hl" type="button" data-qact="fno">No la sabía</button><button class="btn pri" type="button" data-qact="fyes">La sabía</button>` : `<span></span><button class="btn pri" type="button" data-qact="reveal">Mostrar significado</button>`}</div>`;
+    body.innerHTML = `<div class="quiz">${top}${mid}</div>`; return;
+  }
+  if (q.mode === "cloze") {
+    const parts = q.it.e.split(/\[[^\]]+\]/);
+    const first = q.a.charAt(0);
+    const gaps = q.a.split(" … ");
+    mid = `<div class="qtxt cloze">${parts.map((p, i) => esc(p) + (i < parts.length - 1 ? (z.answered ? `<mark>${esc(gaps[i] || "")}</mark>` : "_____") : "")).join("")}</div>
+      <div class="qhint">Pista: ${esc(q.it.d)} · empieza por <span class="qkey">${esc(first)}</span></div>`;
+  } else if (q.mode === "mcq") {
+    mid = `<div class="qhint">¿Qué expresión significa…?</div><div class="qtxt">${esc(q.it.d)}</div>
+      <div class="opts">${q.opts.map((o, i) => `<button class="opt ${z.answered ? (o === q.it ? "right" : z.last === i ? "wrong" : "") : ""}" type="button" data-opt="${i}" ${z.answered ? "disabled" : ""}>${esc(o.t)}</button>`).join("")}</div>`;
+  } else if (q.mode === "mc") {
+    mid = `<div class="qtxt">${esc(q.ex.q).replace("___", "_____")}</div>
+      <div class="opts">${q.ex.o.map((o, i) => `<button class="opt ${z.answered ? (q.ex.a.includes(o) ? "right" : z.last === i ? "wrong" : "") : ""}" type="button" data-opt="${i}" ${z.answered ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>`;
+  } else if (q.mode === "wf") {
+    mid = `<div class="qtxt">${esc(q.ex.q).replace("___", "_____")}</div><div class="qhint">Palabra base: <span class="qkey">${esc(q.ex.h)}</span></div>`;
+  } else if (q.mode === "kwt") {
+    mid = `<div class="qhint">Frase original</div><div class="qtxt" style="font-size:19px">${esc(q.ex.q)}</div>
+      <div class="qhint">Usa <span class="qkey">${esc(q.ex.h)}</span> sin cambiarla, entre 3 y 8 palabras:</div><div class="qtxt" style="font-size:19px">${esc(q.ex.p).replace("___", "_____")}</div>`;
+  }
+  const typed = ["cloze","wf","kwt"].includes(q.mode);
+  const input = typed ? `<form class="ans" id="ansf"><input id="ansi" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Tu respuesta" ${z.answered ? "disabled" : ""} value="${esc(z.typed || "")}"><button class="btn pri" ${z.answered ? "disabled" : ""}>Comprobar</button>${z.answered ? "" : '<button class="btn" type="button" data-qact="skip">No lo sé</button>'}</form>` : "";
+  let fb = "";
+  if (z.answered) {
+    const right = q.mode === "cloze" ? q.a : q.mode === "mcq" ? q.it.t : q.ex.a[0];
+    const it = q.it;
+    fb = `<div class="fb ${z.lastOk ? "ok" : "bad"}"><b>${z.lastOk ? "Correcto" : "Respuesta: " + esc(right)}</b>
+      ${it ? `${esc(it.t)}: ${esc(it.d)}${it.es ? ` <span class="esp">(${esc(it.es)})</span>` : ""}` : (q.ex.a.length > 1 ? `También vale: ${q.ex.a.slice(1).map(esc).join(" · ")}` : "")}
+      ${!z.lastOk && typed ? `<div style="margin-top:6px"><button class="more" type="button" data-qact="override">Mi respuesta también era correcta</button></div>` : ""}</div>
+      <div class="qnav"><span></span><button class="btn pri" type="button" data-qact="next" id="nextb">Siguiente</button></div>`;
+  }
+  body.innerHTML = `<div class="quiz">${top}${mid}${input}${fb}</div>`;
+  if (typed && !z.answered) $("#ansi").focus(); else $("#nextb")?.focus();
+}
+function quizAnswer(ok, typed){
+  const z = S.quiz, q = z.qs[z.i];
+  z.answered = true; z.lastOk = ok; z.typed = typed || "";
+  if (ok) z.ok++;
+  Store.addStat(z.d.id, ok);
+  if (!ok && q.it) { const m = Store.mark(z.d.id, keyOf(z.d.id, q.it)); if (!m || m.st !== 1) Store.setMark(z.d.id, q.it, 1); else { m.box = 0; m.due = Date.now(); Store.save("marks_" + z.d.id); } }
+  renderQuiz();
+}
+function checkTyped(){
+  const z = S.quiz, q = z.qs[z.i], v = norm($("#ansi").value);
+  if (!v) return;
+  const answers = q.mode === "cloze" ? [q.a] : q.ex.a;
+  const strip = s => norm(s).replace(/^(the|a|an) /, "").replace(/ … /g, " ");
+  quizAnswer(answers.some(a => norm(a) === v || strip(a) === strip(v)), $("#ansi").value);
+}
+
+/* ---------- review (spaced repetition across topics) ---------- */
+function renderReview(){
+  const now = Date.now(), all = Store.allMarks().filter(m => m.st === 1);
+  const due = all.filter(m => (m.due || 0) <= now).sort((a, b) => a.due - b.due);
+  S.rv = S.rv && S.rv.list.length ? S.rv : {list:shuffle(due), i:0, shown:false, front:S.rvFront || "term"};
+  const r = S.rv;
+  const head = `<div class="thead"><h1>Repaso</h1><span class="muted">Las palabras que marcas vuelven aquí con repetición espaciada: si la sabes, tarda más en volver; si no, vuelve pronto. Tras varios aciertos pasa a dominada.</span></div>`;
+  if (!all.length) { $("#main").innerHTML = head + `<div class="panel">Todavía no has marcado ninguna palabra. Entra en un tema y pulsa el subrayador junto a lo que no sepas.</div>`; return; }
+  if (r.i >= r.list.length) {
+    const next = all.filter(m => m.due > now).sort((a, b) => a.due - b.due)[0];
+    $("#main").innerHTML = head + `<div class="panel"><p><b>No te queda nada pendiente.</b> ${all.length} palabras en repaso.${next ? " La próxima vuelve el " + fmtDate(next.due) + "." : ""}</p>
+      <button class="btn" type="button" data-rv="all">Repasar todas igualmente</button></div>${markedTable(all)}`;
+    S.rv = null; return;
+  }
+  const c = r.list[r.i], meta = topicMeta(c.topic);
+  const front = r.front === "term" ? `<div class="term">${esc(c.t)}${sayBtn(c.t)}</div>` : `<div class="qtxt">${esc(c.d)}</div>`;
+  const back = r.front === "term" ? `<div class="def">${esc(c.d)}</div>` : `<div class="term">${esc(c.t)}${sayBtn(c.t)}</div>`;
+  $("#main").innerHTML = head + `
+  <div class="scope"><span class="muted" style="font-size:13px">Mostrar primero:</span>
+    <button class="chip" type="button" data-front="term" aria-pressed="${r.front === "term"}">La palabra</button>
+    <button class="chip" type="button" data-front="def" aria-pressed="${r.front === "def"}">La definición</button></div>
+  <div class="quiz"><div class="qtop"><span>${r.i + 1} de ${r.list.length} · ${esc(meta?.es || c.topic)}</span><span>${KIND_ES[c.k] || ""} · ${c.s}</span></div>
+    <div class="flash">${front}${r.shown ? `${back}${c.e ? `<div class="ex">${exHtml(c.e)}</div>` : ""}${c.es ? `<div class="esp">${esc(c.es)}</div>` : ""}` : ""}</div>
+    <div class="qnav">${r.shown ? `
+      <button class="btn" type="button" data-grade="0">Otra vez</button><button class="btn" type="button" data-grade="1">Difícil</button>
+      <button class="btn pri" type="button" data-grade="2">Bien</button><button class="btn" type="button" data-grade="3">Fácil</button>` :
+      `<span></span><button class="btn pri" type="button" data-rv="show">Mostrar respuesta</button>`}</div></div>
+  <p class="note" style="margin-top:12px">Otra vez: vuelve en esta sesión. Difícil: mañana. Bien y Fácil: cada vez más tarde (3, 7, 14, 30 días).</p>`;
+}
+function grade(g){
+  const r = S.rv, c = r.list[r.i], m = Store.marks[c.topic]?.[c.key]; if (!m) { r.i++; return renderReview(); }
+  const now = Date.now();
+  if (g === 0) { m.box = 0; m.due = now; r.list.push(c); }
+  else if (g === 1) { m.box = Math.max(1, m.box || 0); m.due = now + DAY; }
+  else { m.box = Math.min(6, (m.box || 0) + (g === 3 ? 2 : 1)); if (m.box >= 6) m.st = 2; m.due = now + INTERVALS[Math.min(5, m.box)] * DAY; }
+  Store.save("marks_" + c.topic); updateBadge();
+  r.i++; r.shown = false; renderReview();
+}
+function markedTable(all){
+  const by = {}; all.forEach(m => (by[m.topic] = by[m.topic] || []).push(m));
+  return `<div class="block-h">Tus palabras en repaso</div>` + Object.entries(by).map(([t, ms]) =>
+    `<div class="block-h" style="margin-top:14px;text-transform:none;letter-spacing:0;font-size:13px">${esc(topicMeta(t)?.es || t)}</div><div class="list">${ms.map(m =>
+      `<div class="row"><span class="mk on">${ICON_MARK}</span><div><span class="term on">${esc(m.t)}</span><div class="def">${esc(m.d)}</div><div class="muted" style="font-size:12px">Vuelve el ${fmtDate(m.due)}</div></div></div>`).join("")}</div>`).join("");
+}
+
+/* ---------- essays ---------- */
+function targetWords(d, e){
+  if (e.targets?.length) return e.targets;
+  const pick = d.items.filter(i => i.k !== "wf");
+  const marked = shuffle(pick.filter(i => (Store.mark(d.id, keyOf(d.id, i)) || {}).st === 1));
+  const rest = shuffle(pick.filter(i => !marked.includes(i)));
+  return [...marked, ...rest].slice(0, 10).map(i => ({t:i.t, d:i.d}));
+}
+function variants(t){
+  return t.split(/\s[\/·]\s|\s·\s|\//).map(v => v.replace(/\([^)]*\)/g, "").replace(/\b(sb|sth|sb's|your|one's)\b/g, " ").replace(/\.\.\.|…/g, " ").trim()).filter(Boolean);
+}
+function isUsed(t, text){
+  const low = " " + text.toLowerCase().replace(/[’]/g, "'") + " ";
+  return variants(t).some(v => {
+    const words = v.toLowerCase().split(/\s+/).filter(w => w.length > 2 && !["the","and","for","with","into","from"].includes(w));
+    if (!words.length) return false;
+    return words.every(w => { const stem = w.replace(/(ies|es|e|s|ed|ing|y)$/, ""); return new RegExp("\\b" + stem.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(low); });
+  });
+}
+const wc = s => (s.trim().match(/\S+/g) || []).length;
+function newEssay(d, idx){
+  const p = d.essays[idx];
+  const e = {type:"essay", id:Date.now().toString(36) + Math.random().toString(36).slice(2, 5), topic:d.id, title:p ? p.title : "", task:p ? p.type : "Libre", prompt:p ? p.prompt : "", text:"", created:Date.now(), updated:Date.now(), feedback:null, history:[]};
+  e.targets = targetWords(d, e);
+  return e;
+}
+function renderEssay(d){
+  const mine = Object.values(Store.essays).filter(e => e.topic === d.id).sort((a, b) => b.updated - a.updated);
+  let e = S.essayId && Store.essays[S.essayId];
+  if (!e || e.topic !== d.id) { e = S.draft && S.draft.topic === d.id ? S.draft : (S.draft = newEssay(d, S.promptIdx || 0)); }
+  const isSaved = !!Store.essays[e.id];
+  const used = e.targets.filter(t => isUsed(t.t, e.text)).length;
+  $("#tabbody").innerHTML = `
+  <div class="ess">
+    <div style="min-width:0">
+      <div class="note" style="margin-bottom:12px"><b>${esc(e.task || "Libre")}.</b> ${esc(e.prompt || "Escribe sobre el tema con libertad.")}</div>
+      <input class="etitle" id="etitle" placeholder="Título" value="${esc(e.title)}">
+      <div class="block-h" style="margin:4px 0 8px">Intenta usar estas palabras del tema <button class="more" type="button" data-eact="shuffle" style="margin-left:6px">Cambiar</button></div>
+      <div class="targets" id="targets">${e.targets.map(t => `<span class="tw ${isUsed(t.t, e.text) ? "used" : ""}" title="${esc(t.d)}">${esc(t.t)}</span>`).join("")}</div>
+      <div class="estat" id="estat"><span>${wc(e.text)} palabras</span><span>${used} de ${e.targets.length} palabras objetivo usadas</span><span>${isSaved ? "Guardada · " + fmtDate(e.updated) : "Sin guardar"}</span></div>
+      <textarea class="essay" id="etext" placeholder="Empieza a escribir aquí. Se guarda sola mientras escribes.">${esc(e.text)}</textarea>
+      <div class="qnav">
+        <span style="display:flex;gap:8px;flex-wrap:wrap">${isSaved ? `<button class="btn" type="button" data-eact="new">Nueva redacción</button><button class="btn" type="button" data-eact="del" id="delb">Borrar</button>` : ""}</span>
+        <button class="btn pri" type="button" data-eact="correct" id="corrb" ${wc(e.text) < 40 ? "disabled" : ""}>Corregir con Claude</button>
+      </div>
+      <div id="fbbox">${e.feedback ? feedbackHtml(e.feedback) : ""}</div>
+      ${e.history?.length ? `<details style="margin-top:16px"><summary class="muted">Versiones anteriores (${e.history.length})</summary>${e.history.map(h => `<div class="panel" style="margin-top:8px"><div class="muted" style="font-size:12px">${fmtDate(h.at)}${h.level ? " · nivel " + esc(h.level) : ""}</div><div class="rew">${esc(h.text)}</div></div>`).join("")}</details>` : ""}
+    </div>
+    <aside style="min-width:0;display:flex;flex-direction:column;gap:18px">
+      <div><div class="block-h" style="margin-top:0">Tareas propuestas</div><div class="prompts">
+        ${d.essays.map((p, i) => `<button class="prompt" type="button" data-prompt="${i}" aria-pressed="${!isSaved && e.prompt === p.prompt}"><small>${esc(p.type)}</small><b>${esc(p.title)}</b></button>`).join("")}
+        <button class="prompt" type="button" data-prompt="-1" aria-pressed="${!isSaved && !e.prompt}"><small>Libre</small><b>Tema libre</b></button>
+      </div></div>
+      <div><div class="block-h" style="margin-top:0">Tus redacciones de este tema</div><div class="elist">
+        ${mine.length ? mine.map(x => `<button class="eitem" type="button" data-essay="${x.id}" ${x.id === e.id ? 'style="border-color:var(--accent)"' : ""}><b>${esc(x.title || "Sin título")}</b><span>${fmtDate(x.updated)} · ${wc(x.text)} palabras${x.feedback?.level ? " · " + esc(x.feedback.level) : ""}</span></button>`).join("") : '<span class="muted" style="font-size:13px">Aún ninguna. Cada redacción se guarda automáticamente mientras escribes, con su corrección, y queda aquí para consultarla cuando quieras. También las tienes todas en «Mis redacciones».</span>'}
+      </div></div>
+    </aside>
+  </div>`;
+  S.cur = e;
+}
+function feedbackHtml(f){
+  const list = (arr, fn) => (arr || []).map(fn).join("");
+  return `<div class="feedback panel">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><h3>Corrección</h3>${f.level ? `<span class="lvl">Nivel estimado: ${esc(f.level)}</span>` : ""}</div>
+    ${f.summary ? `<p style="margin:0">${esc(f.summary)}</p>` : ""}
+    ${f.strengths?.length ? `<div><b>Lo que funciona</b><ul>${list(f.strengths, s => `<li>${esc(s)}</li>`)}</ul></div>` : ""}
+    ${f.corrections?.length ? `<div><b>Errores</b>${list(f.corrections, c => `<div class="corr"><div><span class="del">${esc(c.original)}</span> → <span class="ins">${esc(c.correction)}</span></div><div class="muted" style="font-size:14px">${esc(c.explanation)}</div></div>`)}</div>` : ""}
+    ${f.upgrades?.length ? `<div><b>Para sonar C1–C2</b>${list(f.upgrades, c => `<div class="corr"><div><span class="muted">${esc(c.original)}</span> → <span class="ins">${esc(c.suggestion)}</span></div><div class="muted" style="font-size:14px">${esc(c.why)}</div></div>`)}</div>` : ""}
+    ${f.vocabulary ? `<div><b>Vocabulario del tema</b><p style="margin:4px 0 0">${esc(f.vocabulary)}</p></div>` : ""}
+    ${f.rewritten ? `<details><summary><b>Versión mejorada</b></summary><div class="rew" style="margin-top:8px">${esc(f.rewritten)}</div></details>` : ""}
+  </div>`;
+}
+async function correctEssay(d){
+  const e = S.cur; const box = $("#fbbox"), btn = $("#corrb");
+  const targets = e.targets.map(t => t.t).join("; ");
+  const prompt = `You are an experienced Cambridge C1 Advanced / C2 Proficiency examiner and teacher. The student is a native Spanish speaker aiming for C1–C2.
+Topic of the unit: "${d.meta.en}". Task type: ${e.task || "free writing"}. Task: ${e.prompt || "free writing on the topic"}.
+Target vocabulary the student was asked to try to use: ${targets}.
+
+Student's text:
+"""
+${e.text}
+"""
+
+Correct and assess it. Write all explanations in Spanish; keep quoted English fragments in English. Be precise, specific and encouraging, but honest about the level.
+Return ONLY a JSON object with these keys:
+- "level": the CEFR level the text shows now, e.g. "B2", "B2+", "C1", "C1+", "C2".
+- "summary": 2–3 sentences in Spanish about the overall impression and the single most important thing to improve.
+- "strengths": up to 3 short points in Spanish.
+- "corrections": every grammar, vocabulary, collocation, spelling or punctuation error, as objects {"original": exact fragment from the text, "correction": corrected fragment, "explanation": brief reason in Spanish}.
+- "upgrades": 4–8 suggestions to make correct but plain language sound C1–C2 (collocations, idioms, phrasal verbs, inversion, cleft sentences, more precise words, better linking), as {"original","suggestion","why"} with "why" in Spanish. Prefer vocabulary from the target list and the unit topic where natural.
+- "vocabulary": one paragraph in Spanish saying which target words were used, whether they were used correctly, and how to fit in one or two that are missing.
+- "rewritten": the whole text rewritten at C2 level, keeping the student's ideas and approximate length.`;
+  const sample = await getSample();
+  if (!sample) {
+    S.copyPrompt = prompt.replace("Return ONLY a JSON object with these keys:", "Answer with these sections, using clear headings:").replace(/"(level|summary|strengths|corrections|upgrades|vocabulary|rewritten)"/g, "$1");
+    box.innerHTML = `<div class="panel"><p class="note" style="margin-top:0">La corrección automática solo funciona al abrir el cuaderno dentro de Claude. Tu texto está guardado.</p>
+      <p class="note">Puedes copiar la petición completa (con tu texto y las palabras objetivo) y pegarla en una conversación con Claude en claude.ai.</p>
+      <button class="btn pri" type="button" data-act="copyprompt">Copiar petición para Claude</button> <span class="muted" id="copyok" style="font-size:13px"></span></div>`;
+    return;
+  }
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Corrigiendo…';
+  try {
+    const f = await sample.json(prompt, {modelTier:"default"});
+    if (e.feedback) { e.history = [{text:e.feedbackText || e.text, level:e.feedback.level, at:e.feedback.at || e.updated}, ...(e.history || [])].slice(0, 6); }
+    e.feedback = Object.assign({at:Date.now()}, f); e.feedbackText = e.text;
+    Store.saveEssay(e); S.draft = null; S.essayId = e.id;
+    renderEssay(d);
+    $("#fbbox")?.scrollIntoView({behavior:"smooth", block:"start"});
+  } catch (err) {
+    btn.disabled = false; btn.textContent = "Corregir con Claude";
+    box.innerHTML = `<p class="note">${err.code === "rate_limited" ? "Has hecho muchas consultas seguidas. Prueba de nuevo en un rato." : err.code === "not_granted" ? "No se dio permiso para usar Claude en esta página. Puedes activarlo en el menú de permisos del artefacto." : "No se pudo obtener la corrección ahora. Tu texto está guardado; inténtalo otra vez."}</p>`;
+  }
+}
+let typeTimer = null;
+function onEssayInput(d){
+  const e = S.cur; e.text = $("#etext").value; e.title = $("#etitle").value;
+  clearTimeout(typeTimer);
+  typeTimer = setTimeout(() => {
+    if (wc(e.text) >= 3 || e.title) { Store.saveEssay(e); S.essayId = e.id; S.draft = null; }
+    const used = e.targets.filter(t => isUsed(t.t, e.text)).length;
+    $("#targets").innerHTML = e.targets.map(t => `<span class="tw ${isUsed(t.t, e.text) ? "used" : ""}" title="${esc(t.d)}">${esc(t.t)}</span>`).join("");
+    $("#estat").innerHTML = `<span>${wc(e.text)} palabras</span><span>${used} de ${e.targets.length} palabras objetivo usadas</span><span>${Store.essays[e.id] ? "Guardada" : "Sin guardar"}</span>`;
+    $("#corrb").disabled = wc(e.text) < 40;
+  }, 600);
+}
+function renderAllEssays(){
+  const all = Object.values(Store.essays).sort((a, b) => b.updated - a.updated);
+  const head = `<div class="thead"><h1>Mis redacciones</h1><span class="muted">Todo lo que has escrito, con su corrección. Ábrelas para releer, reescribir y volver a corregir.</span></div>`;
+  if (!all.length) { $("#main").innerHTML = head + '<div class="panel">Todavía no hay redacciones. En cada tema tienes la pestaña Redacción.</div>'; return; }
+  $("#main").innerHTML = head + `<div class="elist" style="max-width:760px">${all.map(x => `<button class="eitem" type="button" data-open-essay="${x.id}"><span class="mono">${esc(topicMeta(x.topic)?.es || x.topic)}</span><b>${esc(x.title || "Sin título")}</b><span>${fmtDate(x.updated)} · ${wc(x.text)} palabras${x.feedback?.level ? " · nivel " + esc(x.feedback.level) : " · sin corregir"}</span></button>`).join("")}</div>`;
+}
+
+/* ---------- backup ---------- */
+async function copyText(txt){
+  try { await navigator.clipboard.writeText(txt); return true; } catch {}
+  try { const ta = document.createElement("textarea"); ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); const ok = document.execCommand("copy"); ta.remove(); return ok; } catch { return false; }
+}
+function bkMsg(t){ const m = $("#bkmsg"); if (m) m.textContent = t; }
+async function exportBackup(){
+  const data = JSON.stringify({app:"cuaderno-c1c2", version:1, exported:new Date().toISOString(), marks:Store.marks, essays:Store.essays, stats:Store.stats, words:Store.words}, null, 1);
+  const filename = "cuaderno-ingles-" + new Date().toISOString().slice(0, 10) + ".json";
+  try {
+    const dl = await window.claude?.use?.("downloads");
+    if (dl) { await dl.save({filename, data}); bkMsg("Copia descargada."); return; }
+  } catch (e) { if (e && e.code && e.code !== "unavailable") { bkMsg("No se descargó la copia."); return; } }
+  try {
+    const url = URL.createObjectURL(new Blob([data], {type:"application/json"}));
+    const a = document.createElement("a"); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000); bkMsg("Copia descargada.");
+  } catch { bkMsg("No se pudo descargar la copia en este navegador."); }
+}
+async function importBackup(file){
+  try {
+    const d = JSON.parse(await file.text());
+    if (d.app !== "cuaderno-c1c2") throw new Error("bad");
+    let nm = 0, ne = 0;
+    for (const [t, m] of Object.entries(d.marks || {})) { const cur = Store.marks[t] = Store.marks[t] || {}; for (const [k, v] of Object.entries(m)) { if (!cur[k]) nm++; cur[k] = cur[k] && (cur[k].box || 0) > (v.box || 0) ? cur[k] : v; } Store.save("marks_" + t, 0); }
+    for (const [id, e] of Object.entries(d.essays || {})) { if (!Store.essays[id] || (e.updated || 0) > (Store.essays[id].updated || 0)) { if (!Store.essays[id]) ne++; Store.essays[id] = e; Store.save("essay_" + id, 0); } }
+    for (const [t, v] of Object.entries(d.stats || {})) { const c = Store.stats[t]; if (!c || v.n > c.n) Store.stats[t] = v; }
+    let nw = 0;
+    for (const [t, list] of Object.entries(d.words || {})) { const cur = Store.words[t] = Store.words[t] || []; const have = new Set(cur.map(it => keyOf(t, it))); list.forEach(it => { if (!have.has(keyOf(t, it))) { cur.push(it); nw++; } }); Store.save("words_" + t, 0); if (CACHE[t]) withOwn(CACHE[t]); }
+    Store.save("stats", 0); updateBadge(); renderHome();
+    bkMsg(`Copia cargada: ${nm} marcas, ${ne} redacciones y ${nw} palabras tuyas nuevas.`);
+  } catch { bkMsg("Ese archivo no es una copia del cuaderno."); }
+}
+document.addEventListener("change", ev => { if (ev.target.id === "impf" && ev.target.files[0]) { importBackup(ev.target.files[0]); ev.target.value = ""; } });
+
+/* ---------- events ---------- */
+document.addEventListener("click", async ev => {
+  const t = ev.target.closest("button,[data-topic]"); if (!t) return;
+  const ds = t.dataset;
+  if (ds.say !== undefined) return speak(ds.say, t);
+  if (ds.act === "copyprompt") return copyText(S.copyPrompt || "").then(ok => { const m = $("#copyok"); if (m) m.textContent = ok ? "Copiado. Pégalo en Claude." : "No se pudo copiar automáticamente."; });
+  if (ds.act === "export") return exportBackup();
+  if (ds.act === "import") return $("#impf")?.click();
+  if (t.id === "go-home") return go("home");
+  if (ds.nav) { if (ds.nav === "review") S.rv = null; return go(ds.nav); }
+  if (ds.topic) { const same = S.topic === ds.topic; return go("topic", {topic:ds.topic, tab:same ? S.tab : "vocab", kind:"all", src:"all", q:"", onlyMarked:false, essayId:null, draft:null}); }
+  if (ds.tab) { S.tab = ds.tab; S.quiz = null; return renderTopic(); }
+  const d = CACHE[S.topic];
+  if (ds.kind) { S.kind = ds.kind; return renderVocab(d); }
+  if (ds.mark) {
+    const it = itemByKey(d, ds.mark), m = Store.mark(d.id, ds.mark);
+    Store.setMark(d.id, it, m?.st === 1 ? 0 : 1); return drawList(d);
+  }
+  if (ds.act === "addw") { S.addOpen = !S.addOpen; renderVocab(d); if (S.addOpen) $("#nw_t")?.focus(); return; }
+  if (ds.delw) {
+    if (t.dataset.armed) { Store.delWord(d.id, ds.delw); withOwn(d); return renderVocab(d); }
+    t.dataset.armed = "1"; t.textContent = "Pulsa otra vez para borrar"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Borrar mi palabra"; } }, 4000); return;
+  }
+  if (ds.more) return askMore(d, ds.more, t);
+  if (ds.scope) { S.scope = ds.scope; return renderPractice(d); }
+  if (ds.mode) return startQuiz(d, ds.mode);
+  if (ds.opt !== undefined && S.quiz) {
+    const z = S.quiz, q = z.qs[z.i], i = +ds.opt; z.last = i;
+    return quizAnswer(q.mode === "mcq" ? q.opts[i] === q.it : q.ex.a.includes(q.ex.o[i]));
+  }
+  if (ds.qact) {
+    const z = S.quiz;
+    if (ds.qact === "exit") { S.quiz = null; return renderPractice(d); }
+    if (ds.qact === "again") return startQuiz(d, z.mode);
+    if (ds.qact === "reveal") { z.answered = true; return renderQuiz(); }
+    if (ds.qact === "fyes" || ds.qact === "fno") {
+      const ok = ds.qact === "fyes"; if (ok) z.ok++; Store.addStat(d.id, ok);
+      const it = z.qs[z.i].it; if (!ok) { const m = Store.mark(d.id, keyOf(d.id, it)); if (m?.st !== 1) Store.setMark(d.id, it, 1); }
+      z.i++; z.answered = false; return renderQuiz();
+    }
+    if (ds.qact === "skip") return quizAnswer(false, "");
+    if (ds.qact === "override") { z.ok++; z.lastOk = true; Store.addStat(d.id, true); z.i++; z.answered = false; z.typed = ""; return renderQuiz(); }
+    if (ds.qact === "next") { z.i++; z.answered = false; z.typed = ""; z.last = null; return renderQuiz(); }
+  }
+  if (ds.front) { S.rvFront = ds.front; if (S.rv) S.rv.front = ds.front; return renderReview(); }
+  if (ds.rv === "show") { S.rv.shown = true; return renderReview(); }
+  if (ds.rv === "all") { S.rv = {list:shuffle(Store.allMarks().filter(m => m.st === 1)), i:0, shown:false, front:S.rvFront || "term"}; return renderReview(); }
+  if (ds.grade) return grade(+ds.grade);
+  if (ds.prompt !== undefined) { const i = +ds.prompt; S.essayId = null; S.draft = newEssay(d, i); if (i < 0) { S.draft.prompt = ""; S.draft.title = ""; S.draft.task = "Libre"; } return renderEssay(d); }
+  if (ds.essay) { S.essayId = ds.essay; S.draft = null; return renderEssay(d); }
+  if (ds.openEssay) { const x = Store.essays[ds.openEssay]; return go("topic", {topic:x.topic, tab:"essay", essayId:x.id, draft:null, kind:"all", src:"all", q:""}); }
+  if (ds.eact === "shuffle") { const e = S.cur; e.targets = null; e.targets = targetWords(d, {}); if (Store.essays[e.id]) Store.saveEssay(e); return renderEssay(d); }
+  if (ds.eact === "new") { S.essayId = null; S.draft = newEssay(d, 0); return renderEssay(d); }
+  if (ds.eact === "del") {
+    if (t.dataset.armed) { Store.deleteEssay(S.cur.id); S.essayId = null; S.draft = null; return renderEssay(d); }
+    t.dataset.armed = "1"; t.textContent = "Pulsa otra vez para borrar"; t.classList.add("hl"); setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Borrar"; t.classList.remove("hl"); } }, 4000); return;
+  }
+  if (ds.eact === "correct") return correctEssay(d);
+});
+document.addEventListener("input", ev => {
+  const d = CACHE[S.topic];
+  if (ev.target.id === "q") { S.q = ev.target.value; drawList(d); }
+  if (ev.target.id === "etext" || ev.target.id === "etitle") onEssayInput(d);
+});
+document.addEventListener("change", ev => {
+  const d = CACHE[S.topic], id = ev.target.id;
+  if (id === "srcsel") { S.src = ev.target.value; drawList(d); }
+  if (id === "onlym") { S.onlyMarked = ev.target.checked; drawList(d); }
+  if (id === "showes") { S.showEs = ev.target.checked; lsSet("cuaderno.showEs", S.showEs); drawList(d); }
+  if (id === "msel") go("topic", {topic:ev.target.value, tab:"vocab", kind:"all", src:"all", q:"", essayId:null, draft:null});
+});
+document.addEventListener("submit", ev => {
+  if (ev.target.id === "ansf") { ev.preventDefault(); checkTyped(); }
+  if (ev.target.id === "addwf") { ev.preventDefault(); addOwnWord(CACHE[S.topic]); }
+});
+function addOwnWord(d){
+  const v = id => ($("#" + id)?.value || "").trim();
+  const it = {t:v("nw_t"), k:v("nw_k") || "vocab", s:"Mía", d:v("nw_d"), e:v("nw_e"), es:v("nw_es"), own:1, added:Date.now()};
+  if (!it.t) return;
+  if (!/\[.+\]/.test(it.e) && it.e && it.e.toLowerCase().includes(it.t.toLowerCase())) { const i = it.e.toLowerCase().indexOf(it.t.toLowerCase()); it.e = it.e.slice(0, i) + "[" + it.e.slice(i, i + it.t.length) + "]" + it.e.slice(i + it.t.length); }
+  if (d.items.some(o => keyOf(d.id, o) === keyOf(d.id, it))) { $("#nwmsg").textContent = "Esa palabra ya está en este tema."; return; }
+  Store.addWord(d.id, it); withOwn(d);
+  S.kind = "all"; S.src = "all"; S.q = ""; S.onlyMarked = false; renderVocab(d);
+  $("#nwmsg").textContent = "Guardada: " + it.t + ". Aparece al final de la lista y entra en la práctica.";
+  $("#nw_t")?.focus();
+}
+document.addEventListener("keydown", ev => {
+  if (ev.key === "Enter" && !ev.target.closest("button") && S.quiz?.answered && S.view === "topic" && S.tab === "practice" && !ev.target.closest("textarea") && S.quiz.mode !== "flash") { ev.preventDefault(); $("#nextb")?.click(); }
+});
+
+/* ---------- boot ---------- */
+(async () => {
+  try { TOPICS = await (await fetch("data/topics.json")).json(); }
+  catch { $("#main").innerHTML = '<div class="panel">No se pudo cargar el índice de temas.</div>'; return; }
+  render();
+  await Store.init();
+  render();
+})();
+})();
+</script>
+</html>
